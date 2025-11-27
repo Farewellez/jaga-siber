@@ -34,6 +34,7 @@ class RegisteredUserController extends Controller
             'username' => ['required', 'string', 'min:3', 'unique:users', 'regex:/^\S*$/'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'string', 'in:hunter,company'],
         ]);
 
         $user = User::create([
@@ -41,13 +42,15 @@ class RegisteredUserController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'hunter', // Force default role
+            'role' => $request->role,
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
-
+        if ($user->role === 'company') {
+            return redirect(route('company.dashboard', absolute: false));
+        }
         return redirect(route('hunter.dashboard', absolute: false));
     }
 }

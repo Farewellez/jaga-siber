@@ -13,7 +13,7 @@ class Program extends Model
         'scope',
         'reward_min',
         'reward_max',
-        'is_active',
+        'is_public',
     ];
     public function company()
     {

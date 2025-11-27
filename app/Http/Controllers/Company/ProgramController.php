@@ -28,8 +28,9 @@ class ProgramController extends Controller
             'scope' => 'required|string',
             'reward_min' => 'required|integer|min:0',
             'reward_max' => 'required|integer|min:0|gte:reward_min',
-            'is_public' => 'boolean',
+            // 'is_public' => 'boolean',
         ]);
+        $isPublic = $request->has('is_public') ? true : false;
 
         Program::create([
             'company_id' => auth()->id(),
@@ -39,7 +40,7 @@ class ProgramController extends Controller
             'scope' => $request->scope,
             'reward_min' => $request->reward_min,
             'reward_max' => $request->reward_max,
-            'is_public' => $request->is_public ?? true,
+            'is_public' => $isPublic,
         ]);
 
         return redirect()->route('company.programs.index')->with('success', 'Program created successfully.');
@@ -65,9 +66,9 @@ class ProgramController extends Controller
             'scope' => 'required|string',
             'reward_min' => 'required|integer|min:0',
             'reward_max' => 'required|integer|min:0|gte:reward_min',
-            'is_public' => 'boolean',
+            // 'is_public' => 'boolean',
         ]);
-
+        $isPublic = $request->has('is_public') ? true : false;
         $program->update([
             'title' => $request->title,
             'slug' => Str::slug($request->title . '-' . time()),
@@ -75,7 +76,7 @@ class ProgramController extends Controller
             'scope' => $request->scope,
             'reward_min' => $request->reward_min,
             'reward_max' => $request->reward_max,
-            'is_public' => $request->is_public ?? true,
+            'is_public' => $isPublic,
         ]);
 
         return redirect()->route('company.programs.index')->with('success', 'Program updated successfully.');

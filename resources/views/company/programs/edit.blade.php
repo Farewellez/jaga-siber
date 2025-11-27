@@ -1,14 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Edit Program') }}: {{ $program->title }}
+        <h2 class="font-semibold text-xl text-gray-100 leading-tight">
+            {{ __('Edit Program') }}: <span class="text-indigo-400">{{ $program->title }}</span>
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+            <div class="bg-gray-800 border border-gray-700 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-100">
                     <form action="{{ route('company.programs.update', $program) }}" method="POST" class="space-y-6">
                         @csrf
                         @method('PUT')
@@ -21,13 +21,17 @@
 
                         <div>
                             <x-input-label for="description" :value="__('Description')" />
-                            <textarea id="description" name="description" rows="4" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>{{ old('description', $program->description) }}</textarea>
+                            <textarea id="description" name="description" rows="4" 
+                                class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-gray-100 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
+                                required>{{ old('description', $program->description) }}</textarea>
                             <x-input-error class="mt-2" :messages="$errors->get('description')" />
                         </div>
 
                         <div>
                             <x-input-label for="scope" :value="__('Scope (Target URLs)')" />
-                            <textarea id="scope" name="scope" rows="3" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>{{ old('scope', $program->scope) }}</textarea>
+                            <textarea id="scope" name="scope" rows="3" 
+                                class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-gray-100 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" 
+                                required>{{ old('scope', $program->scope) }}</textarea>
                             <x-input-error class="mt-2" :messages="$errors->get('scope')" />
                         </div>
 
@@ -46,14 +50,14 @@
 
                         <div class="block mt-4">
                             <label for="is_public" class="inline-flex items-center">
-                                <input id="is_public" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="is_public" value="1" {{ old('is_public', $program->is_public) ? 'checked' : '' }}>
-                                <span class="ms-2 text-sm text-gray-600">{{ __('Public Program (Visible to all Hunters)') }}</span>
+                                <input id="is_public" type="checkbox" class="rounded border-gray-600 bg-gray-900 text-indigo-600 shadow-sm focus:ring-indigo-500" name="is_public" value="1" {{ old('is_public', $program->is_public) ? 'checked' : '' }}>
+                                <span class="ms-2 text-sm text-gray-300">{{ __('Public Program (Visible to all Hunters)') }}</span>
                             </label>
                         </div>
 
                         <div class="flex items-center gap-4">
                             <x-primary-button>{{ __('Update Program') }}</x-primary-button>
-                            <a href="{{ route('company.programs.index') }}" class="text-gray-600 hover:text-gray-900">{{ __('Cancel') }}</a>
+                            <a href="{{ route('company.programs.index') }}" class="text-gray-400 hover:text-gray-200">{{ __('Cancel') }}</a>
                         </div>
                     </form>
                 </div>

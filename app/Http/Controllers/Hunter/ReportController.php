@@ -17,14 +17,12 @@ class ReportController extends Controller
         return view('hunter.reports.index', compact('programs'));
     }
 
-    // --- INI YANG TADI HILANG ---
     public function create(Program $program)
     {
         // Menampilkan Form Submit Report untuk Program tertentu
         return view('hunter.reports.create', compact('program'));
     }
-    // ----------------------------
-
+    
     public function store(Request $request)
     {
         // dd($request->all());

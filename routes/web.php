@@ -31,9 +31,14 @@ require __DIR__.'/auth.php';
 // --- ADMIN ROUTES ---
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
+        // Ambil 5 User Terbaru
+        $latestUsers = \App\Models\User::latest()->take(5)->get();
+        
+        // Ambil 5 Laporan Terbaru (beserta relasinya)
+        $latestReports = \App\Models\Report::with('program', 'hunter')->latest()->take(5)->get();
+
+        return view('admin.dashboard', compact('latestUsers', 'latestReports'));
     })->name('admin.dashboard');
-    // Note: Route triage admin saya hapus dari sini karena sudah ada di Shared Route bawah (biar tidak duplikat)
 });
 
 // --- COMPANY ROUTES ---
